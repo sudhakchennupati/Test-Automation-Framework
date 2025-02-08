@@ -26,22 +26,46 @@ jobs:
     - name: Running Test Automation framework with maven
       run: mvn test -Dbrowser=chrome -DisLambdaTest=true -DisHeadless=false
       
-    - name: Upload Test logs
+    - name: Upload Test logs as Artifacts
       if: always()
       uses: actions/upload-artifact@v4.4.3
       with:
        name: Test logs
        path: logs/
 
-    - name: Upload Test Reports
+    - name: Upload Screenshots as Artifacts
       if: always()
       uses: actions/upload-artifact@v4.4.3
       with:
-       name: Test Reports
+       name: screenshots
+       path: screenshots/
+
+    - name: Upload Test Reports as Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4.4.3
+      with:
+       name: htnl-report
        path: report.html
 
     - name: Tests Execution Status
       run: echo "Test execution Completed"
+      
+    - name: Copy Report to gh-pages Folder
+      if: always()
+
+      run: |
+        mkdir -p public/extent-reports
+        cp -R report.html  public/extent-reports/
+        cp -R screenshots/ public/extent-reports/screenshots/
+        ls -l
+
+    - name: Deploy 🚀
+      if: always()
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: public/extent-reports/
+        token: ${{ secrets.PAT1234 }}
+        clean: true
 
        
        
