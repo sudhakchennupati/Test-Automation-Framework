@@ -10,7 +10,7 @@ public class XLReaderUtility {
 	
 	
 	public static void main(String[] args) {
-		File xlsxFile = new File(System.getProperty("user.dir") + "\\testData\\logindata.xlsx");
+		File xlsxFile = new File(System.getProperty("user.dir") + File.separator + "testData" + File.separator +"logindata.xlsx");
 		
 		//XLSX File
 		try {
