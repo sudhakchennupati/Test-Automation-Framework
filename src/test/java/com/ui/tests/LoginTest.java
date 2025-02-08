@@ -25,19 +25,19 @@ public class LoginTest extends TestBase {
 	 */
 	
 	Logger logger = LoggerUtility.getLogger(this.getClass());
-	@Test(description = "verifies with the valid user is able to login into the application", groups = {"e2e", "sanity"},dataProviderClass = com.ui.dataproviders.LoginDataProvider.class,
-			dataProvider = "LogintestDataProvider", retryAnalyzer = com.ui.listeners.MyretryAnalyzer.class)
-	public void loginTest(User user) {
-		
-		assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(), "Sudha kiran");	
-		
-	}
-	
 //	@Test(description = "verifies with the valid user is able to login into the application", groups = {"e2e", "sanity"},dataProviderClass = com.ui.dataproviders.LoginDataProvider.class,
-//			dataProvider = "loginCSVDataProvider")
-//	public void loginCSVTest(User user) {
+//			dataProvider = "LogintestDataProvider", retryAnalyzer = com.ui.listeners.MyretryAnalyzer.class)
+//	public void loginTest(User user) {
 //		
 //		assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(), "Sudha kiran");	
+//		
 //	}
+	
+	@Test(description = "verifies with the valid user is able to login into the application", groups = {"e2e", "sanity"},dataProviderClass = com.ui.dataproviders.LoginDataProvider.class,
+			dataProvider = "loginCSVDataProvider")
+	public void loginCSVTest(User user) {
+		
+		assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(), "Sudha kiran");	
+	}
 
 }
