@@ -21,21 +21,25 @@ public class TestBase {
 	protected HomePage homePage;
 	Logger logger = LoggerUtility.getLogger(this.getClass());
 
-	private Boolean isLambdatest;
+	private Boolean isLambdaTest;
 	
 
-	@Parameters({ "browser", "isLambdatest", "isHeadless" })
+	
 	@BeforeMethod(description = "run before test to launch homepage")
+	@Parameters({ "browser", "isLambdaTest", "isHeadless" })
 	public void setUp(
-			@Optional("chrome") String browser,
-			@Optional("false") Boolean isLambdatest,
-			@Optional("true") Boolean isHeadless,
+			@Optional String browser,
+			@Optional("false") boolean isLambdaTest,
+			@Optional("false") boolean isHeadless,
 			ITestResult result) {
 		
 		WebDriver lambdaDriver;
-		this.isLambdatest = isLambdatest;
+		this.isLambdaTest = isLambdaTest;
+		if(browser == null) {
+			browser = "chrome";
+		}
 	
-		if (isLambdatest) {
+		if (isLambdaTest) {
 			lambdaDriver = LambdaTestUtility.intializeLambdaTestSesssion(browser, result.getMethod().getMethodName());
 			homePage = new HomePage(lambdaDriver);
 
@@ -53,7 +57,7 @@ public class TestBase {
 
 	@AfterMethod(description = "TearDown the browser")
 	public void tearDown() {
-		if(isLambdatest) {
+		if(isLambdaTest) {
 			LambdaTestUtility.quitSession(); // close session on Lambda server	
 		} else {
 			homePage.quit();  //local

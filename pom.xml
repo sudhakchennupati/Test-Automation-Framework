@@ -29,7 +29,7 @@
 					</suiteXmlFiles>
 					<systemPropertyVariables>
 						<browser>${browser}</browser>
-						<isLambdatest>${isLambdatest}</isLambdatest>
+						<isLambdaTest>${isLambdaTest}</isLambdaTest>
 						<isHeadless>${isHeadless}</isHeadless>
 					</systemPropertyVariables>
 				</configuration>
