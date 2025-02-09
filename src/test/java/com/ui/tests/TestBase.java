@@ -44,6 +44,7 @@ public class TestBase {
 			//launch the browser in local machine
 			logger.info("Loading website Homepage");
 			homePage = new HomePage(Browser.valueOf("chrome".toUpperCase()), isHeadless);
+	
 		}
 
 	}
@@ -52,14 +53,14 @@ public class TestBase {
 		return homePage;
 	}
 
-	@AfterMethod(description = "TearDown the browser")
-	public void tearDown() {
-		if(isLambdaTest) {
-			LambdaTestUtility.quitSession(); // close session on Lambda server	
-		} else {
-			homePage.quit();  //local
-		}
-		
-	}
+//	@AfterMethod(description = "TearDown the browser")
+//	public void tearDown() {
+//		if(isLambdaTest) {
+//			LambdaTestUtility.quitSession(); // close session on Lambda server	
+//		} else {
+//			homePage.quit();  //local
+//		}
+//		
+//	}
 
 }

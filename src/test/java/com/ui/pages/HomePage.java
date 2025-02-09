@@ -22,12 +22,13 @@ public final class HomePage extends BrowserUtility{
 		super(browserName,isheadless); //to call the parent class constructor from child class constructor
 		//goToWebsite(readProperty(QA, "URL"));	
 		goToWebsite(JSONUtility.readJSON(QA).getUrl());
-		//maximizeWindow();
+		
 	}
 	
 	public HomePage(WebDriver driver) {
 		super(driver);
 		goToWebsite(JSONUtility.readJSON(QA).getUrl());	
+		maximizeWindow();
 	}
 
 
