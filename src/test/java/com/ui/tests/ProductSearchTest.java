@@ -23,7 +23,7 @@ public class ProductSearchTest extends TestBase {
 	
 		
 	@Test(description = "search for a product", groups = {"e2e", "regression","sanity"})
-	public void searchProductPage() {
+	public void searchProductPageTest() {
 		String searchPageHeader = myAccountPage.searchForProduct(SEARCH_TERM).getSearchPageHeader();
 		System.out.println(searchPageHeader);
 		Assert.assertTrue(searchPageHeader.contains("PRINTED DRESS"));
@@ -31,7 +31,7 @@ public class ProductSearchTest extends TestBase {
 		
 	}
 	@Test(description = "verifies if all the product names dispalyed on search page contains search term", groups = {"e2e", "sanity"})
-	public void verifySearchProductList() {
+	public void verifySearchProductListTest() {
 	
 		boolean actualResult = myAccountPage.searchForProduct(SEARCH_TERM).isValidProductListDisplayed(SEARCH_TERM); 
 		Assert.assertEquals(actualResult, true);
