@@ -37,12 +37,16 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 	Logger logger = LoggerUtility.getLogger(this.getClass());
 	private WebDriverWait wait;
+	
+	public WebDriver getDriver() {
+		return driver.get();
+	}
 
 	public BrowserUtility(WebDriver driver) {
 		super();
 		// BrowserUtility.driver.set(driver); //Initialize the instance variable driver
 		this.driver.set(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(30L));
 	}
 
 	public BrowserUtility(String browserName) {
@@ -50,10 +54,13 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 
 		if (browserName.equalsIgnoreCase("chrome")) {
 			driver.set(new ChromeDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 		} else if (browserName.equalsIgnoreCase("edge")) {
 			driver.set(new EdgeDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 		} else if (browserName.equalsIgnoreCase("Firefox")) {
 			driver.set(new FirefoxDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 		} else {
 			System.err.println("Invalid browser name" + browserName);
 		}
@@ -65,10 +72,13 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 
 		if (browserName == Browser.CHROME) {
 			driver.set(new ChromeDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 		} else if (browserName == Browser.EDGE) {
 			driver.set(new EdgeDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 		} else if (browserName == Browser.FIREFOX) {
 			driver.set(new FirefoxDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 		}
 	}
 
@@ -81,8 +91,10 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 			options.addArguments("--headless=old");
 			options.addArguments("--window-size=1920,1080");
 				driver.set(new ChromeDriver(options));
+				wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 			} else {
 			driver.set(new ChromeDriver());
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 			}
 		} else if ( browserName == Browser.EDGE) {
 			if(isHeadless) {
@@ -90,8 +102,10 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 				options.addArguments("--headless=old");
 				options.addArguments("--diable-gpu");
 				driver.set(new EdgeDriver(options));
+				wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 			} else {
-				driver.set(new EdgeDriver()); 		
+				driver.set(new EdgeDriver()); 	
+				wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 			}
 			
 		} else if (browserName == Browser.FIREFOX) {
@@ -99,15 +113,15 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 				FirefoxOptions options = new FirefoxOptions();
 				options.addArguments("--headless=old");
 				driver.set(new FirefoxDriver(options)); 
+				wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 			} else {
 			driver.set(new FirefoxDriver()); 
+			wait = new WebDriverWait(driver.get(), Duration.ofSeconds(30L));
 			}
 		}
 	}
 
-	public WebDriver getDriver() {
-		return driver.get();
-	}
+
 
 	public void goToWebsite(String url) {
 		logger.info("Going to webpage " + url);
@@ -132,25 +146,27 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 
 	public void clickOn(By locator) {
 		logger.info("Find teh Element" + locator);
-		WebElement webElement = driver.get().findElement(locator); // Find the element
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
 		logger.info("Click on locator" + locator);
-		webElement.click();
+		element.click();
 	}
 	public void clickOn(WebElement element) {
 		logger.info("Click on locator" + element);
 		element.click();
 	}
 
-	public void enterText(By locator, String valueToEnter) {
+	public void enterText(By locator, String textToEnter) {
 		logger.info("Find teh Element" + locator);
-		WebElement element = driver.get().findElement(locator);
-		logger.info("Entering the value" + valueToEnter);
-		element.sendKeys(valueToEnter);
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		//WebElement element = driver.get().findElement(locator);
+		logger.info("Entering the value" + textToEnter);
+		element.sendKeys(textToEnter);
 	}
 	
 	public void clearText(By locator) {
 		logger.info("Find teh Element" + locator);
-		WebElement element = driver.get().findElement(locator);
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		//WebElement element = driver.get().findElement(locator);
 		logger.info("clear the value" );
 		element.clear();
 	}
@@ -207,7 +223,8 @@ public abstract class BrowserUtility { // parent classes are abstract classes an
 	
 	public void clickOnCheckbox(By checkboxLocator) {
 		logger.info("Find the checkbox Element" + checkboxLocator);
-		WebElement element = driver.get().findElement(checkboxLocator);
+		//WebElement element = driver.get().findElement(checkboxLocator);
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(checkboxLocator));
 		logger.info("Found the checkbox Element, now selecting" + checkboxLocator);
 		element.click();
 		
